@@ -2,8 +2,12 @@
   "name": "cryptotter-react",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/prod.js",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "build": "node ./script/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,5 +20,8 @@
     "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
+  },
+  "peerDependencies": {
+    "react": "*"
   }
 }
