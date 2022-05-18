@@ -1,5 +1,6 @@
-import Tab from './modes/tab';
-import Popup from './modes/popup';
+import createTab from './modes/create-tab.js';
+import createPopup from './modes/create-popup.js';
+import Template from './components/template.js'
 import {jsx} from 'react/jsx-runtime'
 
 CryptotterButton.defaultProps = {
@@ -7,13 +8,17 @@ CryptotterButton.defaultProps = {
 };
 
 function CryptotterButton(props) {
+  let createWindow = null
   if (props.type === 'tab') {
-    return jsx(Tab, props)
+    createWindow = createTab
   } else if (props.type === 'popup') {
-    return jsx(Popup, props)
+    createWindow = createPopup
   }
   
-  return jsx(Popup, props)
+  return jsx(Template, {
+    ...props,
+    createWindow
+  })
 }
 
 export {CryptotterButton};

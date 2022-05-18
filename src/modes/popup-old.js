@@ -3,27 +3,27 @@ import Button from '../components/button.js';
 import {getPopupSizes} from '../utils/index.js';
 import {jsx} from 'react/jsx-runtime'
 
-function Popup(props) {
+function Popup({payment, transaction, onClick, onSuccess, ...componentProps}) {
   const [state] = useState({
     messageListener: null
   })
   
   const buttonTypeProps = useMemo(() => {
-    return props.transaction ? {
+    return transaction ? {
       elementType: 'a',
-      href: `${props.payment}/${props.transaction}`,
+      href: `${payment}/${transaction}`,
       target: '__blank'
     }: {
       elementType: 'div',
     }
-  }, [props.payment, props.transaction])
+  }, [payment, transaction])
   
   return (
     jsx(Button, {
       ...buttonTypeProps,
-      children: props.children,
+      ...componentProps,
       onClick: async (event) => {
-        const onClickResult =  await props.onClick?.(event);
+        const onClickResult =  await onClick?.(event);
         if (onClickResult === false) {
           return
         }
@@ -38,17 +38,17 @@ function Popup(props) {
           width: 400,
         });
         const tabWindow = window.open(
-          `${props.payment}/${onClickResult?.transaction || props.transaction}`,
+          `${payment}/${onClickResult?.transaction || transaction}`,
           '',
           `width=${popupSize.width},height=${popupSize.height},left=${popupSize.left},top=${popupSize.top}`
         );
         
         state.messageListener = function (event) {
-          if (event.origin !== new URL(props.payment).origin) {
+          if (event.origin !== new URL(payment).origin) {
             return;
           }
           
-          props.onSuccess?.(event.data.transaction);
+          onSuccess?.(event.data.transaction);
         }
         
         window.removeEventListener('message', state.messageListener)

@@ -27,6 +27,8 @@ function Tab(props) {
   
   return jsx(Button, {
     ...buttonTypeProps,
+    className: props.className,
+    style: props.style,
     children: props.children,
     onClick: async (event) => {
       const onClickResult = await props.onClick?.(event);
