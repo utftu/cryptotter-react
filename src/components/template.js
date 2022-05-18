@@ -1,6 +1,5 @@
 import {useMemo, useState} from 'react';
 import Button from './button.js';
-import {getPopupSizes} from '../utils/index.js';
 import {jsx} from 'react/jsx-runtime'
 
 function Template({payment, transaction, onClick, onSuccess, createWindow, ...componentProps}) {
@@ -51,25 +50,6 @@ function Template({payment, transaction, onClick, onSuccess, createWindow, ...co
         newWindow.focus();
       }
     })
-  );
-}
-
-function popup({payment, transaction}) {
-  const popupSize = getPopupSizes({
-    height: 400,
-    width: 400,
-  });
-  return  window.open(
-    `${payment}/${transaction}`,
-    '',
-    `width=${popupSize.width},height=${popupSize.height},left=${popupSize.left},top=${popupSize.top}`
-  );
-}
-
-function tab({payment, transaction}) {
-  return  window.open(
-    `${payment}/${transaction}`,
-    '_blank'
   );
 }
 
