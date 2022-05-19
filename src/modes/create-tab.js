@@ -1,6 +1,6 @@
-function createTab({payment, transaction}) {
+function createTab({payOrigin, transaction}) {
   return  window.open(
-    `${payment}/${transaction}`,
+    `${payOrigin}/${transaction}`,
     '_blank'
   );
 }

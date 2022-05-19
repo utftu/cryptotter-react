@@ -2,7 +2,7 @@ import {useMemo, useState} from 'react';
 import Button from './button.js';
 import {jsx} from 'react/jsx-runtime'
 
-function Template({payment, transaction, onClick, onSuccess, createWindow, ...componentProps}) {
+function Template({payOrigin, transaction, onClick, onSuccess, createWindow, ...componentProps}) {
   const [state] = useState({
     messageListener: null
   })
@@ -10,12 +10,12 @@ function Template({payment, transaction, onClick, onSuccess, createWindow, ...co
   const buttonTypeProps = useMemo(() => {
     return transaction ? {
       elementType: 'a',
-      href: `${payment}/${transaction}`,
+      href: `${payOrigin}/${transaction}`,
       target: '__blank'
     }: {
       elementType: 'div',
     }
-  }, [payment, transaction])
+  }, [payOrigin, transaction])
   
   return (
     jsx(Button, {
@@ -33,12 +33,12 @@ function Template({payment, transaction, onClick, onSuccess, createWindow, ...co
         }
         
         const newWindow = await createWindow({
-          payment,
+          payOrigin,
           transaction: onClickResult?.transaction ?? transaction
         })
         
         state.messageListener = function (event) {
-          if (event.origin !== new URL(payment).origin) {
+          if (event.origin !== new URL(payOrigin).origin) {
             return;
           }
           

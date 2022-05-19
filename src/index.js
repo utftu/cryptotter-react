@@ -4,7 +4,7 @@ import Template from './components/template.js'
 import {jsx} from 'react/jsx-runtime'
 
 CryptotterButton.defaultProps = {
-  payment: 'https://pay.cryptotter.tech',
+  payOrigin: 'https://pay.cryptotter.tech',
 };
 
 function CryptotterButton(props) {
