@@ -5,6 +5,7 @@ import {jsx} from 'react/jsx-runtime'
 
 CryptotterButton.defaultProps = {
   payOrigin: 'https://pay.cryptotter.tech',
+  type: 'tab'
 };
 
 function CryptotterButton(props) {

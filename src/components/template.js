@@ -42,7 +42,9 @@ function Template({payOrigin, transaction, onClick, onSuccess, createWindow, ...
             return;
           }
           
-          onSuccess?.(event.data.transaction);
+          if (event.data.type === 'success') {
+            onSuccess?.(event.data.data.transaction);
+          }
         }
         
         window.removeEventListener('message', state.messageListener)
