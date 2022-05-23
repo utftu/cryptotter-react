@@ -46,6 +46,11 @@ function Template({payOrigin, transaction, onClick, onSuccess, createWindow, ...
           transaction: onClickResult?.transaction ?? transaction
         })
         
+        if (!newWindow) {
+          alert('Please allow current page open new page')
+          return;
+        }
+        
         state.messageListener = function (event) {
           if (event.origin !== new URL(payOrigin).origin) {
             return;
