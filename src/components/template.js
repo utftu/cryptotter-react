@@ -1,11 +1,20 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react'
 import Button from './button.js';
 import {jsx} from 'react/jsx-runtime'
 
 function Template({payOrigin, transaction, onClick, onSuccess, createWindow, ...componentProps}) {
   const [state] = useState({
-    messageListener: null
+    messageListener: null,
+    listeners: []
   })
+  
+  useEffect(() => {
+    return () => {
+      if (state.messageListener) {
+        window.removeEventListener('message', state.messageListener)
+      }
+    }
+  }, [])
   
   const buttonTypeProps = useMemo(() => {
     return transaction ? {
@@ -45,9 +54,12 @@ function Template({payOrigin, transaction, onClick, onSuccess, createWindow, ...
           if (event.data.type === 'success') {
             onSuccess?.(event.data.data.transaction);
           }
+  
+          window.removeEventListener('message', state.messageListener)
+          state.messageListener = null
         }
         
-        window.removeEventListener('message', state.messageListener)
+        window.addEventListener('message', state.messageListener)
   
         newWindow.focus();
       }
